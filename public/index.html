@@ -16,10 +16,12 @@
         </header>
         <nav>
             <ul class="list-unstyled flex flex-justify-around">
-                <li>nav item 1</li>
-                <li>nav item 2</li>
-                <li>nav item 3</li>
-                <li>nav item 4</li>
+                <form action="https://www.wikipedia.org/search-redirect.php">
+                    <input type="hidden" name="family" value="wikipedia">
+                    <input type="hidden" name="language" value="en">
+                    <input type="text" name="search">
+                    <button type="submit">Search</button>
+                </form>
             </ul>
         </nav>
         <main class="flex-1">
