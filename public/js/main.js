@@ -91,9 +91,15 @@ const wikiSDK = (function () {
         };
         
         wikiSDK.search(searchQuery, function(success, response){
-            const content = success 
-                ? response.query.search.map(createSearchItem).join('') 
-                : response;
+            let content;
+            if(!success) {
+                content = response;
+            } else if(response.query.searchinfo.totalhits === 0) {
+                content = '<p>Sorry, no results were found</p>';
+            } else {
+                content = response.query.search.map(createSearchItem).join('');
+            }
+
             render(content);
         }, options);
 
@@ -120,6 +126,6 @@ const wikiSDK = (function () {
     
 
     // default text on page load
-    render('Lorem ipsum dolor, sit amet consectetur adipisicing elit.');
+    render('<p>Welcome! Please enter your search query in the field above to search en.wikipedia.org</p>');
 
 })();
