@@ -216,7 +216,7 @@ const wikiSDK = (function () {
                 render('<p>Sorry, no results were found</p>');
             } else {
                 setPagination(options.batchSize, response.continue.sroffset, response.query.searchinfo.totalhits));
-                const docFragment = document.createDocumentFragment() ;
+                const docFragment = document.createDocumentFragment();
                 const results = response.query.search.map(createSearchItem);
                 results.forEach(function(item){ docFragment.appendChild(item)});
                 render(docFragment);
