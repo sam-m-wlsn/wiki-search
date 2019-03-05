@@ -29,11 +29,11 @@ const wikiSDK = (function () {
                     callback(true, responseJSON);
                 }
             } else {
-                callback(false, getErrorMessage());
+                callback(false, getErrorMessage('HTTP ' + request.status));
             }
         }
         request.onerror = function () {
-            callback(false, getErrorMessage());
+            callback(false, getErrorMessage('Ajax failed'));
         }
         request.send();
     }
