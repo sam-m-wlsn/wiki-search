@@ -11,9 +11,15 @@ const wikiSDK = (function () {
             '&origin=*',
             '&format=json',
             '&list=search',
-            '&srsearch=',
-            query
+            '&srsearch='
         ];
+
+        if ('filter' in options) {
+            parameters.push(options.filter + ':');
+        }
+        
+        parameters.push(query);
+
         if('batchSize' in options) {
             parameters.push('&srlimit=');
             parameters.push(options.batchSize);
@@ -76,7 +82,8 @@ const wikiSDK = (function () {
 
         const searchQuery = event.target.elements['search'].value;
         const options = {
-            batchSize: document.getElementById('batchSize').value
+            batchSize: document.getElementById('batchSize').value,
+            filter: document.getElementById('searchType').value
         };
         
         wikiSDK.search(searchQuery, function(success, response){
