@@ -36,8 +36,10 @@ nav { background-color: #373838; color: #efefef }
 .flex-justify-around { justify-content: space-around }
 .flex-justify-center { justify-content: center }
 .flex-wrap { flex-wrap: wrap }
+.hidden { visibility: hidden }
 .list-unstyled { list-style: none }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0 }
+.text-right { text-align: right }
 .icon { width: 25px; height: 25px; display: block }
 
 /* result cards */
@@ -50,3 +52,4 @@ nav { background-color: #373838; color: #efefef }
 #wikiSearch input[name="search"] { max-width: 250px; border-width: 1px 0 1px 1px; border-radius: 4px 0 0 4px }
 #wikiSearch button[type="submit"] { border-radius: 0 4px 4px 0 }
 #searchNav, #response, #info { max-width: 1200px; margin-left: auto; margin-right: auto }
+#info { padding: 1rem }
