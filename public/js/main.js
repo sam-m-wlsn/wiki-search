@@ -14,7 +14,7 @@ const wikiSDK = (function () {
             '&srsearch='
         ];
 
-        if ('filter' in options) {
+        if ('filter' in options && query.length > 0) {
             parameters.push(options.filter + ':');
         }
 
@@ -34,6 +34,10 @@ const wikiSDK = (function () {
     }
 
     function searchShim(query, callback, options) {
+        if(query === '') {
+            callback(false, getErrorMessage('nosrsearch'));
+            return false;
+        }
         const request = new XMLHttpRequest();
 
         request.open('GET', getSearchURL(query, options), true);
