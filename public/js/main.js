@@ -25,11 +25,6 @@ const wikiSDK = (function () {
             parameters.push(options.batchSize);
         }
 
-        if('nearMatch' in options && options.nearMatch) {
-            parameters.push('&srwhat=');
-            parameters.push('nearmatch');
-        }
-
         return parameters.join('');
     }
 
@@ -92,10 +87,8 @@ const wikiSDK = (function () {
         const searchQuery = event.target.elements['search'].value;
         const options = {
             batchSize: document.getElementById('batchSize').value,
-            filter: document.getElementById('searchType').value,
-            nearMatch: document.getElementById('nearMatch').checked
+            filter: document.getElementById('searchType').value
         };
-        console.log(document.getElementById('nearMatch').checked);
         
         wikiSDK.search(searchQuery, function(success, response){
             const content = success 
