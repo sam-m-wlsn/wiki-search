@@ -30,6 +30,11 @@ const wikiSDK = (function () {
             parameters.push(options.srsort);
         }
 
+        if('sroffset' in options) {
+            parameters.push('&sroffset=');
+            parameters.push(options.sroffset);
+        }
+
         return parameters.join('');
     }
 
@@ -87,8 +92,19 @@ const wikiSDK = (function () {
     const setPagination = (function() {
         const infoBar = document.getElementById('info');
 
+        const next = document.createElement('a');
+        next.innerText = 'Next';
+        next.className = 'pagination-next';
+        next.id = 'nextPage';
+
+        const prev = document.createElement('a');
+        prev.innerText = 'Prev';
+        prev.className = 'pagination-prev';
+        prev.id = 'prevPage';
+
         const pagination = document.createElement('div');
         pagination.className = 'pagination';
+        pagination.id = 'pagination';
 
         const total = document.createElement('span');
         total.className = 'pagination-total';
@@ -101,16 +117,24 @@ const wikiSDK = (function () {
         pagination.appendChild(current);
         pagination.appendChild(divider);
         pagination.appendChild(total);
+
+        pagination.appendChild(prev);
+        pagination.appendChild(next);
         infoBar.appendChild(pagination);
 
         return function(batchSize, currentIndex, totalHits) {
             const totalPages = Math.ceil(totalHits / batchSize);
             const currentPage = Math.floor(currentIndex / batchSize);
             
+            pagination.setAttribute('data-index', currentIndex);
             total.innerText = totalPages;
             current.innerText = currentPage;
 
-            console.log(totalHits);
+            if(currentIndex <= batchSize) prev.classList.add('hidden');
+            else prev.classList.remove('hidden');
+
+            if (currentIndex >= totalHits) next.classList.add('hidden');
+            else next.classList.remove('hidden');
             
             if (totalHits && totalHits !== 0) infoBar.classList.remove('hidden');
             else infoBar.classList.add('hidden');
@@ -121,7 +145,7 @@ const wikiSDK = (function () {
     const form = document.getElementById('wikiSearch');
 
     // search form functionality
-    function submitSearch(event) {
+    function submitSearch(event, index) {
         event.preventDefault();
         event.stopPropagation();
 
@@ -131,6 +155,7 @@ const wikiSDK = (function () {
             filter: document.getElementById('searchType').value,
             srsort: document.getElementById('sort').value
         };
+        if(index) options.sroffset = index;
 
         wikiSDK.search(searchQuery, function(success, response) {
             let content;
@@ -140,7 +165,7 @@ const wikiSDK = (function () {
                 setPagination(0, 0, 0);
                 content = '<p>Sorry, no results were found</p>';
             } else {
-                setPagination(options.batchSize, response.continue.sroffset, response.query.searchinfo.totalhits);
+                setPagination(parseInt(options.batchSize), parseInt(response.continue.sroffset), parseInt(response.query.searchinfo.totalhits));
                 content = response.query.search.map(createSearchItem).join('');
             }
 
@@ -178,7 +203,21 @@ const wikiSDK = (function () {
     searchTriggers.forEach(function(item) {
         item.addEventListener('change', submitSearch);
     });
-    
+
+    const next = document.getElementById('nextPage');
+    const prev = document.getElementById('prevPage');
+    next.addEventListener('click', function (event) { changePage(event, true) });
+    prev.addEventListener('click', function (event) { changePage(event, false) });
+
+    function changePage(event, forward) {
+        const pagination = document.getElementById('pagination');
+        let index = parseInt(pagination.getAttribute('data-index'));
+        const batchSize = parseInt(document.getElementById('batchSize').value);
+
+        if(!forward) index = index - (batchSize*2);
+        
+        submitSearch(event, index);
+    }
 
     // default text on page load
     render('<p>Welcome! Please enter your search query in the field above to search en.wikipedia.org</p>');
