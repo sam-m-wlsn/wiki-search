@@ -29,6 +29,7 @@ nav { background-color: #373838; color: #efefef }
 .content { height: 100% }
 .flex { display: flex; flex-direction: row }
 .flex-column { flex-direction: column }
+@media(min-width: 768px){.flex-row-md { flex-direction: row }}
 .flex-0 { flex-grow: 0; flex-shrink: 0 }
 .flex-1 { flex-grow: 1; flex-shrink: 1 }
 .flex-align-center { align-items: center }
