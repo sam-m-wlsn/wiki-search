@@ -27,3 +27,8 @@ nav { background-color: #373838; color: #efefef }
 .flex-1 { flex-grow: 1; flex-shrink: 1 }
 .flex-justify-around { justify-content: space-around }
 .list-unstyled { list-style: none }
+
+/* result cards */
+.result { background-color: #373838; padding: 1rem; border-radius: 8px; box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.4) }
+.result:not(:last-child) { margin-bottom: 1rem }
+.result-title { font-size: 1.2rem }
