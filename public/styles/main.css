@@ -31,6 +31,7 @@ nav { background-color: #373838; color: #efefef }
 .flex-column { flex-direction: column }
 .flex-0 { flex-grow: 0; flex-shrink: 0 }
 .flex-1 { flex-grow: 1; flex-shrink: 1 }
+.flex-align-center { align-items: center }
 .flex-justify-around { justify-content: space-around }
 .flex-justify-center { justify-content: center }
 .flex-wrap { flex-wrap: wrap }
@@ -47,3 +48,4 @@ nav { background-color: #373838; color: #efefef }
 #wikiSearch { max-width: 320px }
 #wikiSearch input[name="search"] { max-width: 250px; border-width: 1px 0 1px 1px; border-radius: 4px 0 0 4px }
 #wikiSearch button[type="submit"] { border-radius: 0 4px 4px 0 }
+#searchNav, #response, #info { max-width: 1200px; margin-left: auto; margin-right: auto }

@@ -4,7 +4,7 @@ const wikiSDK = (function () {
     // configs
     const apiBase = 'https://en.wikipedia.org/w/api.php';
 
-    function searchURL(query, options) {
+    function getSearchURL(query, options) {
         const parameters = [
             apiBase,
             '?action=query',
@@ -17,12 +17,17 @@ const wikiSDK = (function () {
         if ('filter' in options) {
             parameters.push(options.filter + ':');
         }
-        
+
         parameters.push(query);
 
         if('batchSize' in options) {
             parameters.push('&srlimit=');
             parameters.push(options.batchSize);
+        }
+
+        if('nearMatch' in options && options.nearMatch) {
+            parameters.push('&srwhat=');
+            parameters.push('nearmatch');
         }
 
         return parameters.join('');
@@ -31,7 +36,7 @@ const wikiSDK = (function () {
     function searchShim(query, callback, options) {
         const request = new XMLHttpRequest();
 
-        request.open('GET', searchURL(query, options), true);
+        request.open('GET', getSearchURL(query, options), true);
         request.onload = function () {
             if (request.status >= 200 && request.status < 400) {
                 const responseJSON = JSON.parse(request.responseText);
@@ -83,8 +88,10 @@ const wikiSDK = (function () {
         const searchQuery = event.target.elements['search'].value;
         const options = {
             batchSize: document.getElementById('batchSize').value,
-            filter: document.getElementById('searchType').value
+            filter: document.getElementById('searchType').value,
+            nearMatch: document.getElementById('nearMatch').checked
         };
+        console.log(document.getElementById('nearMatch').checked);
         
         wikiSDK.search(searchQuery, function(success, response){
             const content = success 
