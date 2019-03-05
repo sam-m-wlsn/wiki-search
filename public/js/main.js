@@ -1,5 +1,6 @@
 'use strict';
 
+// shim for accessing content from wiki API
 const wikiSDK = (function () {
     // configs
     const apiBase = 'https://en.wikipedia.org/w/api.php';
@@ -214,8 +215,8 @@ const wikiSDK = (function () {
                 setPagination(0, 0, 0);
                 render('<p>Sorry, no results were found</p>');
             } else {
-                setPagination(parseInt(options.batchSize), parseInt(response.continue.sroffset), parseInt(response.query.searchinfo.totalhits));
-                const docFragment = new DocumentFragment();
+                setPagination(options.batchSize, response.continue.sroffset, response.query.searchinfo.totalhits));
+                const docFragment = document.createDocumentFragment() ;
                 const results = response.query.search.map(createSearchItem);
                 results.forEach(function(item){ docFragment.appendChild(item)});
                 render(docFragment);
