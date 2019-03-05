@@ -37,7 +37,9 @@ nav { background-color: #373838; color: #efefef }
 .result-title { font-size: 1.2rem }
 
 /* search form styling */
-#wikiSearch input[name="search"] { font-family: inherit; height: 42px; font-size: 1.6rem; padding: 0 1rem; color: #333; border-width: 1px 0 1px 1px; border-style: solid; border-color: black; border-radius: 4px 0 0 4px }
-#wikiSearch input[name="search"]::placeholder { color: #999; font-weight: 100; font-style: italic; font-size: 1.4rem; }
+#wikiSearch { max-width: 320px }
+#wikiSearch input[name="search"] { max-width: 250px; font-family: inherit; height: 42px; font-size: 1.2rem; padding: 0 1rem; color: #333; border-width: 1px 0 1px 1px; border-style: solid; border-color: black; border-radius: 4px 0 0 4px }
+#wikiSearch input[name="search"]::placeholder { color: #999; font-weight: 100; font-style: italic }
 #wikiSearch button[type="submit"] { height: 42px; background-color: black; color: white; border: 1px solid black; padding-left:1rem; padding-right: 1rem; transition: all .2s; border-radius: 0 4px 4px 0 }
 #wikiSearch button[type="submit"]:hover { background-color: #121212 }
+
