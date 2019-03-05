@@ -13,6 +13,11 @@ h5 { font-size: 1.4rem }
 h6 { font-size: 1.2rem }
 p { font-size: 1rem }
 header, main, footer { padding: 2rem }
+input, button, select { color: #333; border: 1px solid black; border-radius: 4px; font-family: inherit; height: 42px; padding: 0 1rem; transition: all 0.2s }
+input::placeholder { color: #999; font-weight: 100; font-style: italic }
+button { background-color: black }
+button:hover { background-color: #121212 }
+select { line-height: 2rem }
 
 /* colors */
 header, footer { background-color: #222; color: #efefef }
@@ -27,6 +32,8 @@ nav { background-color: #373838; color: #efefef }
 .flex-0 { flex-grow: 0; flex-shrink: 0 }
 .flex-1 { flex-grow: 1; flex-shrink: 1 }
 .flex-justify-around { justify-content: space-around }
+.flex-justify-center { justify-content: center }
+.flex-wrap { flex-wrap: wrap }
 .list-unstyled { list-style: none }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0 }
 .icon { width: 25px; height: 25px; display: block }
@@ -38,8 +45,5 @@ nav { background-color: #373838; color: #efefef }
 
 /* search form styling */
 #wikiSearch { max-width: 320px }
-#wikiSearch input[name="search"] { max-width: 250px; font-family: inherit; height: 42px; font-size: 1.2rem; padding: 0 1rem; color: #333; border-width: 1px 0 1px 1px; border-style: solid; border-color: black; border-radius: 4px 0 0 4px }
-#wikiSearch input[name="search"]::placeholder { color: #999; font-weight: 100; font-style: italic }
-#wikiSearch button[type="submit"] { height: 42px; background-color: black; color: white; border: 1px solid black; padding-left:1rem; padding-right: 1rem; transition: all .2s; border-radius: 0 4px 4px 0 }
-#wikiSearch button[type="submit"]:hover { background-color: #121212 }
-
+#wikiSearch input[name="search"] { max-width: 250px; border-width: 1px 0 1px 1px; border-radius: 4px 0 0 4px }
+#wikiSearch button[type="submit"] { border-radius: 0 4px 4px 0 }

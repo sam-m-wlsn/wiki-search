@@ -4,8 +4,8 @@ const wikiSDK = (function () {
     // configs
     const apiBase = 'https://en.wikipedia.org/w/api.php';
 
-    function searchURL(query) {
-        return [
+    function searchURL(query, options) {
+        const parameters = [
             apiBase,
             '?action=query',
             '&origin=*',
@@ -13,13 +13,19 @@ const wikiSDK = (function () {
             '&list=search',
             '&srsearch=',
             query
-        ].join('');
+        ];
+        if('batchSize' in options) {
+            parameters.push('&srlimit=');
+            parameters.push(options.batchSize);
+        }
+
+        return parameters.join('');
     }
 
-    function searchShim(query, callback) {
+    function searchShim(query, callback, options) {
         const request = new XMLHttpRequest();
 
-        request.open('GET', searchURL(query), true);
+        request.open('GET', searchURL(query, options), true);
         request.onload = function () {
             if (request.status >= 200 && request.status < 400) {
                 const responseJSON = JSON.parse(request.responseText);
@@ -69,14 +75,16 @@ const wikiSDK = (function () {
         event.stopPropagation();
 
         const searchQuery = event.target.elements['search'].value;
-        console.log(searchQuery);
+        const options = {
+            batchSize: document.getElementById('batchSize').value
+        };
         
         wikiSDK.search(searchQuery, function(success, response){
             const content = success 
                 ? response.query.search.map(createSearchItem).join('') 
                 : response;
             render(content);
-        });
+        }, options);
 
         function createSearchItem(entry) {
             const item = document.createElement('article');
