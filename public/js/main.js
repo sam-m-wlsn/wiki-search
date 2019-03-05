@@ -78,6 +78,39 @@ const wikiSDK = (function () {
         }
     })();
 
+    const setPagination = (function() {
+        const infoBar = document.getElementById('info');
+
+        const pagination = document.createElement('div');
+        pagination.className = 'pagination hidden';
+
+        const total = document.createElement('span');
+        total.className = 'pagination-total';
+
+        const divider = document.createTextNode('/');
+
+        const current = document.createElement('span');
+        current.className = 'pagination-current';
+
+        pagination.appendChild(current);
+        pagination.appendChild(divider);
+        pagination.appendChild(total);
+        infoBar.appendChild(pagination);
+
+        return function(batchSize, currentIndex, totalHits) {
+            const totalPages = Math.ceil(totalHits / batchSize);
+            const currentPage = Math.floor(currentIndex / batchSize);
+            
+            total.innerText = totalPages;
+            current.innerText = currentPage;
+
+            console.log(totalHits);
+            
+            if (totalHits && totalHits !== 0) pagination.classList.remove('hidden');
+            else pagination.classList.add('hidden');
+        }
+    })();
+
     // search form functionality
     const form = document.getElementById('wikiSearch');
 
@@ -93,11 +126,13 @@ const wikiSDK = (function () {
 
         wikiSDK.search(searchQuery, function(success, response) {
             let content;
-            if(!success) {
+            if (!success) {
                 content = response;
-            } else if(response.query.searchinfo.totalhits === 0) {
+            } else if (response.query.searchinfo.totalhits === 0) {
+                setPagination(0, 0, 0);
                 content = '<p>Sorry, no results were found</p>';
             } else {
+                setPagination(options.batchSize, response.continue.sroffset, response.query.searchinfo.totalhits);
                 content = response.query.search.map(createSearchItem).join('');
             }
 
