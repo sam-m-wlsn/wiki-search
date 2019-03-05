@@ -16,12 +16,15 @@
         </header>
         <nav>
             <ul class="list-unstyled flex flex-justify-around">
-                <form action="https://www.wikipedia.org/search-redirect.php" id="wikiSearch">
+                <form action="https://www.wikipedia.org/search-redirect.php" id="wikiSearch" class="flex">
                     <input type="hidden" name="family" value="wikipedia">
                     <input type="hidden" name="language" value="en">
-                    <label for="searchQuery">Search En.wikipedia.org: </label>
-                    <input type="text" name="search" id="searchQuery">
-                    <button type="submit">Search</button>
+                    <label for="searchQuery" class="sr-only">Search Wikipedia.org</label>
+                    <input type="text" name="search" id="searchQuery" placeholder="Search Wikipedia&hellip;">
+                    <button type="submit">
+                        <span class="sr-only">Search</span>
+                        <img src="./images/_ionicons_svg_md-search.svg" alt="Search" class="icon">
+                    </button>
                 </form>
             </ul>
         </nav>

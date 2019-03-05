@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
 
 /* styles reset */
-html { font-size: 14px; font-family: Verdana, Geneva, Tahoma, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; box-sizing: border-box }
+html { font-size: 14px; font-family: Verdana, Geneva, Tahoma, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale }
+html * { box-sizing: border-box }
 body { color: #333; background: white; height: 100vh; margin: 0 }
 h1, h2, h3, h4, h5, h6 { font-family: 'Roboto Condensed', sans-serif; margin-top: 1rem }
 h1 { font-size: 2.8rem }
@@ -27,8 +28,16 @@ nav { background-color: #373838; color: #efefef }
 .flex-1 { flex-grow: 1; flex-shrink: 1 }
 .flex-justify-around { justify-content: space-around }
 .list-unstyled { list-style: none }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0 }
+.icon { width: 25px; height: 25px; display: block }
 
 /* result cards */
 .result { background-color: #373838; padding: 1rem; border-radius: 8px; box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.4) }
 .result:not(:last-child) { margin-bottom: 1rem }
 .result-title { font-size: 1.2rem }
+
+/* search form styling */
+#wikiSearch input[name="search"] { font-family: inherit; height: 42px; font-size: 1.6rem; padding: 0 1rem; color: #333; border-width: 1px 0 1px 1px; border-style: solid; border-color: black; border-radius: 4px 0 0 4px }
+#wikiSearch input[name="search"]::placeholder { color: #999; font-weight: 100; font-style: italic; font-size: 1.4rem; }
+#wikiSearch button[type="submit"] { height: 42px; background-color: black; color: white; border: 1px solid black; padding-left:1rem; padding-right: 1rem; transition: all .2s; border-radius: 0 4px 4px 0 }
+#wikiSearch button[type="submit"]:hover { background-color: #121212 }
