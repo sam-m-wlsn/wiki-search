@@ -54,3 +54,6 @@ nav { background-color: #373838; color: #efefef }
 #wikiSearch button[type="submit"] { border-radius: 0 4px 4px 0 }
 #searchNav, #response, #info { max-width: 1200px; margin-left: auto; margin-right: auto }
 #info { padding: 1rem }
+.pagination { margin: 1rem }
+.pagination-prev, .pagination-next { padding: 0.4rem 0.8rem; transition: all 0.2s; background-color: #efefef; color: #333; margin: 0.2rem }
+.pagination-next:hover, .pagination-prev:hover { opacity: 0.8 }
