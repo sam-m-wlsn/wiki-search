@@ -38,6 +38,17 @@ const wikiSDK = (function () {
         return parameters.join('');
     }
 
+    function getPageURL(pageID) {
+        return [
+            apiBase,
+            '?action=parse',
+            '&origin=*',
+            '&pageid=',
+            pageID,
+            '&format=json'
+        ].join('');
+    }
+
     function searchShim(query, callback, options) {
         if(query === '') {
             callback(false, getErrorMessage('nosrsearch'));
@@ -64,6 +75,28 @@ const wikiSDK = (function () {
         request.send();
     }
 
+    function getPage(pageId, callback) {
+        const request = new XMLHttpRequest();
+
+        request.open('GET', getPageURL(pageId), true);
+        request.onload = function () {
+            if (request.status >= 200 && request.status < 400) {
+                const responseJSON = JSON.parse(request.responseText);
+                if ('error' in responseJSON) {
+                    callback(false, getErrorMessage(responseJSON.error.code));
+                } else {
+                    callback(true, responseJSON);
+                }
+            } else {
+                callback(false, getErrorMessage('HTTP ' + request.status));
+            }
+        }
+        request.onerror = function () {
+            callback(false, getErrorMessage('Ajax failed'));
+        }
+        request.send();
+    }
+
     function getErrorMessage(responseCode) {
         switch(responseCode) {
             case 'nosrsearch':
@@ -74,7 +107,8 @@ const wikiSDK = (function () {
     }
 
     return {
-        search: searchShim
+        search: searchShim,
+        page: getPage
     };
 })();
 
@@ -84,7 +118,13 @@ const wikiSDK = (function () {
         const container = document.getElementById('response');
 
         return function(content) {
-            container.innerHTML = content;
+            if(typeof content === "string") container.innerHTML = content;
+            else {
+                console.log(content);
+                
+                container.innerHTML = '';
+                container.appendChild(content);
+            }
         }
     })();
 
@@ -144,6 +184,15 @@ const wikiSDK = (function () {
 
     const form = document.getElementById('wikiSearch');
 
+    function openPage(event) {
+        const pageId = event.currentTarget.getAttribute('data-page-id');
+        wikiSDK.page(pageId, function(success, results){
+            console.log(results);
+            
+            render(results.parse.text['*']);
+        });
+    }
+
     // search form functionality
     function submitSearch(event, index) {
         event.preventDefault();
@@ -160,21 +209,28 @@ const wikiSDK = (function () {
         wikiSDK.search(searchQuery, function(success, response) {
             let content;
             if (!success) {
-                content = response;
+                render(response);
             } else if (response.query.searchinfo.totalhits === 0) {
                 setPagination(0, 0, 0);
-                content = '<p>Sorry, no results were found</p>';
+                render('<p>Sorry, no results were found</p>');
             } else {
                 setPagination(parseInt(options.batchSize), parseInt(response.continue.sroffset), parseInt(response.query.searchinfo.totalhits));
-                content = response.query.search.map(createSearchItem).join('');
-            }
+                const docFragment = new DocumentFragment();
+                const results = response.query.search.map(createSearchItem);
+                results.forEach(function(item){ docFragment.appendChild(item)});
+                render(docFragment);
 
-            render(content);
+                const cards = document.querySelectorAll('.result');
+            }
         }, options);
 
         function createSearchItem(entry) {
+            const href = document.createElement('a');
+            href.className = 'result';
+            href.addEventListener('click', openPage, true);
+            href.setAttribute('data-page-id', entry.pageid);
+
             const item = document.createElement('article');
-            item.className = 'result';
 
             const title = document.createElement('h2');
             title.className = 'result-title';
@@ -187,7 +243,9 @@ const wikiSDK = (function () {
             item.appendChild(title);
             item.appendChild(description);
 
-            return item.outerHTML;
+            href.appendChild(item);
+
+            return href;
         }
 
         return false;

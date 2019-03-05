@@ -44,7 +44,8 @@ nav { background-color: #373838; color: #efefef }
 .icon { width: 25px; height: 25px; display: block }
 
 /* result cards */
-.result { background-color: #373838; padding: 1rem; border-radius: 8px; box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.4) }
+.result { display: block; background-color: #373838; padding: 1rem; border: 1px solid #373838; border-radius: 8px; box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.4); transition: all 0.2s }
+.result:hover { border-color: gold; cursor: pointer }
 .result:not(:last-child) { margin-bottom: 1rem }
 .result-title { font-size: 1.2rem }
 
@@ -56,4 +57,5 @@ nav { background-color: #373838; color: #efefef }
 #info { padding: 1rem }
 .pagination { margin: 1rem }
 .pagination-prev, .pagination-next { padding: 0.4rem 0.8rem; transition: all 0.2s; background-color: #efefef; color: #333; margin: 0.2rem }
-.pagination-next:hover, .pagination-prev:hover { opacity: 0.8 }
+.pagination-next:hover, .pagination-prev:hover { opacity: 0.8; cursor: pointer }
+.mw-parser-output { background-color: white; padding: 1rem; color: black }
