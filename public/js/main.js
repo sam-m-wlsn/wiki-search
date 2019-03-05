@@ -80,17 +80,18 @@ const wikiSDK = (function () {
 
     // search form functionality
     const form = document.getElementById('wikiSearch');
-    form.addEventListener('submit', function(event){
+
+    function submitSearch(event) {
         event.preventDefault();
         event.stopPropagation();
 
-        const searchQuery = event.target.elements['search'].value;
+        const searchQuery = document.getElementById('searchQuery').value;
         const options = {
             batchSize: document.getElementById('batchSize').value,
             filter: document.getElementById('searchType').value
         };
-        
-        wikiSDK.search(searchQuery, function(success, response){
+
+        wikiSDK.search(searchQuery, function(success, response) {
             let content;
             if(!success) {
                 content = response;
@@ -122,6 +123,16 @@ const wikiSDK = (function () {
         }
 
         return false;
+    }
+
+    form.addEventListener('submit', submitSearch);
+    const searchTriggers = [
+        document.getElementById('searchType'),
+        document.getElementById('batchSize')
+    ];
+
+    searchTriggers.forEach(function(item) {
+        item.addEventListener('change', submitSearch);
     });
     
 
