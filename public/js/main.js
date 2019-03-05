@@ -25,6 +25,11 @@ const wikiSDK = (function () {
             parameters.push(options.batchSize);
         }
 
+        if('srsort' in options) {
+            parameters.push('&srsort=');
+            parameters.push(options.srsort);
+        }
+
         return parameters.join('');
     }
 
@@ -78,11 +83,12 @@ const wikiSDK = (function () {
         }
     })();
 
+    // creates method to update pagination
     const setPagination = (function() {
         const infoBar = document.getElementById('info');
 
         const pagination = document.createElement('div');
-        pagination.className = 'pagination hidden';
+        pagination.className = 'pagination';
 
         const total = document.createElement('span');
         total.className = 'pagination-total';
@@ -106,14 +112,15 @@ const wikiSDK = (function () {
 
             console.log(totalHits);
             
-            if (totalHits && totalHits !== 0) pagination.classList.remove('hidden');
-            else pagination.classList.add('hidden');
+            if (totalHits && totalHits !== 0) infoBar.classList.remove('hidden');
+            else infoBar.classList.add('hidden');
         }
     })();
 
-    // search form functionality
+
     const form = document.getElementById('wikiSearch');
 
+    // search form functionality
     function submitSearch(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -121,7 +128,8 @@ const wikiSDK = (function () {
         const searchQuery = document.getElementById('searchQuery').value;
         const options = {
             batchSize: document.getElementById('batchSize').value,
-            filter: document.getElementById('searchType').value
+            filter: document.getElementById('searchType').value,
+            srsort: document.getElementById('sort').value
         };
 
         wikiSDK.search(searchQuery, function(success, response) {
@@ -163,7 +171,8 @@ const wikiSDK = (function () {
     form.addEventListener('submit', submitSearch);
     const searchTriggers = [
         document.getElementById('searchType'),
-        document.getElementById('batchSize')
+        document.getElementById('batchSize'),
+        document.getElementById('sort')
     ];
 
     searchTriggers.forEach(function(item) {

@@ -47,7 +47,17 @@
             </ul>
         </nav>
         <main class="flex-1">
-            <div id="info" class="text-right"></div>
+            <div id="info" class="hidden flex flex-wrap flex-space-between">
+                <div>
+                    <select name="sort" id="sort">
+                        <option value="relevance" selected>relevance</option>
+                        <option value="incoming_links_desc">Last Edit Ascending</option>
+                        <option value="last_edit_desc">Last Edit Descending</option>
+                        <option value="create_timestamp_asc">Creation Ascending</option>
+                        <option value="create_timestamp_desc">Creation Descending</option>
+                    </select>    
+                </div>
+            </div>
             <div id="response"></div>
         </main>
         <footer class="flex-0">

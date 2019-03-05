@@ -35,8 +35,9 @@ nav { background-color: #373838; color: #efefef }
 .flex-align-center { align-items: center }
 .flex-justify-around { justify-content: space-around }
 .flex-justify-center { justify-content: center }
+.flex-space-between { justify-content: space-between }
 .flex-wrap { flex-wrap: wrap }
-.hidden { visibility: hidden }
+.hidden { visibility: hidden; display: none }
 .list-unstyled { list-style: none }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0 }
 .text-right { text-align: right }
